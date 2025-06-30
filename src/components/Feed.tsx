@@ -76,8 +76,10 @@ export default function Feed({ search }: { search: string }) {
                 {favorites.some(fav => fav.url === item.url) ? '❤️' : '🤍'}
               </button>
               <Link href={item.url} target="_blank" className="block">
-                {item.urlToImage && (
+                {item.urlToImage && item.urlToImage.startsWith('http') ? (
                   <Image src={item.urlToImage} alt={item.title} width={400} height={192} className="w-full h-48 object-cover rounded mb-2" />
+                ) : (
+                  <Image src="/default.jpg" alt={item.title} width={400} height={192} className="w-full h-48 object-cover rounded mb-2" />
                 )}
                 <h3 className="font-bold text-lg mb-1">{item.title}</h3>
                 <p className="text-sm text-gray-500 mb-2">{item.description}</p>

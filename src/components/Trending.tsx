@@ -21,8 +21,10 @@ export default function Trending() {
         {data.articles.slice(0, 5).map((item: Article) => (
           <div key={item.url} className="p-4 bg-white dark:bg-gray-700 rounded shadow">
             <Link href={item.url} target="_blank" className="block">
-              {item.urlToImage && (
+              {item.urlToImage && item.urlToImage.startsWith('http') ? (
                 <Image src={item.urlToImage} alt={item.title} width={400} height={128} className="w-full h-32 object-cover rounded mb-2" />
+              ) : (
+                <Image src="/default.jpg" alt={item.title} width={400} height={128} className="w-full h-32 object-cover rounded mb-2" />
               )}
               <h3 className="font-bold text-lg mb-1">{item.title}</h3>
               <p className="text-sm text-gray-500 mb-2">{item.description}</p>
