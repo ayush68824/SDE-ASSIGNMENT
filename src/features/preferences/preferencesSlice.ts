@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface Article {
+  url: string;
+  urlToImage?: string;
+  title: string;
+}
+
 interface PreferencesState {
   categories: string[];
   darkMode: boolean;

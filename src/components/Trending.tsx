@@ -1,5 +1,13 @@
 import { useGetTopHeadlinesQuery } from '../features/news/newsApi';
 import Link from 'next/link';
+import Image from 'next/image';
+
+interface Article {
+  url: string;
+  urlToImage?: string;
+  title: string;
+  description?: string;
+}
 
 export default function Trending() {
   const { data, isLoading, error } = useGetTopHeadlinesQuery({ category: 'general' });
@@ -10,11 +18,11 @@ export default function Trending() {
     <div className="p-6">
       <h2 className="text-xl font-bold mb-4">Trending</h2>
       <div className="grid gap-4">
-        {data.articles.slice(0, 5).map((item: any) => (
+        {data.articles.slice(0, 5).map((item: Article) => (
           <div key={item.url} className="p-4 bg-white dark:bg-gray-700 rounded shadow">
             <Link href={item.url} target="_blank" className="block">
               {item.urlToImage && (
-                <img src={item.urlToImage} alt={item.title} className="w-full h-32 object-cover rounded mb-2" />
+                <Image src={item.urlToImage} alt={item.title} width={400} height={128} className="w-full h-32 object-cover rounded mb-2" />
               )}
               <h3 className="font-bold text-lg mb-1">{item.title}</h3>
               <p className="text-sm text-gray-500 mb-2">{item.description}</p>

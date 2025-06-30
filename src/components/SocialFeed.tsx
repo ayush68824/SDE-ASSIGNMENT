@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const mockSocialPosts = [
   {
     id: 1,
@@ -29,12 +31,12 @@ export default function SocialFeed() {
       <div className="grid gap-4">
         {mockSocialPosts.map(post => (
           <div key={post.id} className="p-4 bg-white dark:bg-gray-700 rounded shadow flex gap-4">
-            <img src={post.avatar} alt={post.username} className="w-12 h-12 rounded-full object-cover" />
+            <Image src={post.avatar || '/default.jpg'} alt={post.username} width={48} height={48} className="w-12 h-12 rounded-full object-cover" />
             <div className="flex-1">
               <div className="font-bold">@{post.username}</div>
               <div className="mb-2">{post.text}</div>
               {post.image && (
-                <img src={post.image} alt="post" className="w-full h-32 object-cover rounded" />
+                <Image src={post.image || '/default.jpg'} alt="post" width={400} height={128} className="w-full h-32 object-cover rounded" />
               )}
             </div>
           </div>
