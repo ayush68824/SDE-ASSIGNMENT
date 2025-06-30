@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const NEWS_API_KEY = 'e4054b7ab45844c18073f33b99a6ab73';
 
-interface Article {
+export interface Article {
   url: string;
   urlToImage?: string;
   title: string;

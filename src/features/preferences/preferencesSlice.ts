@@ -4,12 +4,13 @@ interface Article {
   url: string;
   urlToImage?: string;
   title: string;
+  description?: string;
 }
 
 interface PreferencesState {
   categories: string[];
   darkMode: boolean;
-  favorites: any[];
+  favorites: Article[];
 }
 
 const initialState: PreferencesState = {
@@ -36,7 +37,7 @@ const preferencesSlice = createSlice({
         localStorage.setItem('darkMode', JSON.stringify(state.darkMode));
       }
     },
-    addFavorite(state: PreferencesState, action: PayloadAction<any>) {
+    addFavorite(state: PreferencesState, action: PayloadAction<Article>) {
       state.favorites.push(action.payload);
       if (typeof window !== 'undefined') {
         localStorage.setItem('favorites', JSON.stringify(state.favorites));

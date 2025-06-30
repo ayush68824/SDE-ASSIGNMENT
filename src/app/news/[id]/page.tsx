@@ -1,8 +1,9 @@
 import { mockNews } from '../../../data/mockNews';
 import Link from 'next/link';
 
-export default function NewsDetail({ params }: { params: { id: string } }) {
-  const news = mockNews.find(n => n.id === Number(params.id));
+export default async function NewsDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const news = mockNews.find(n => n.id === Number(id));
   if (!news) return <div className="p-8 text-red-600">News not found.</div>;
   return (
     <div className="p-8">

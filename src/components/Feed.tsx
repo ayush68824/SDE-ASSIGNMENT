@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { useGetTopHeadlinesQuery } from '../features/news/newsApi';
+import type { Article } from '../features/news/newsApi';
 import { addFavorite, removeFavorite } from '../features/preferences/preferencesSlice';
 import { Reorder } from 'framer-motion';
 import Image from 'next/image';
@@ -24,13 +25,14 @@ export default function Feed({ search }: { search: string }) {
       },
       { threshold: 1 }
     );
-    if (loader.current) observer.observe(loader.current);
-    return () => { if (loader.current) observer.unobserve(loader.current); };
+    const currentLoader = loader.current;
+    if (currentLoader) observer.observe(currentLoader);
+    return () => { if (currentLoader) observer.unobserve(currentLoader); };
   }, []);
 
   // Set order when data changes
   useEffect(() => {
-    if (data?.articles) setOrder(data.articles.map((_: any, idx: number) => idx));
+    if (data?.articles) setOrder(data.articles.map((_: Article, idx: number) => idx));
   }, [data]);
 
   if (isLoading) return <div className="p-8">Loading...</div>;
@@ -39,7 +41,7 @@ export default function Feed({ search }: { search: string }) {
 
   // Filter by search
   const filtered = data.articles
-    .filter((a: any) =>
+    .filter((a: Article) =>
       a.title.toLowerCase().includes(search.toLowerCase()) ||
       (a.description && a.description.toLowerCase().includes(search.toLowerCase()))
     );
@@ -51,7 +53,7 @@ export default function Feed({ search }: { search: string }) {
           .map(idx => filtered[idx])
           .filter(Boolean)
           .slice(0, visible)
-          .map((item: any, idx: number) => (
+          .map((item: Article, idx: number) => (
             <Reorder.Item
               key={item.url}
               value={idx}
